@@ -1,0 +1,13 @@
+.chup {
+    height: 80vh;
+    position: absolute;
+    bottom: 0;
+    right: 15vh;
+    cursor: pointer;
+  }
+  
+  .logo {
+    position: relative;
+    left: 15vh;
+    height: 45vh;
+  }

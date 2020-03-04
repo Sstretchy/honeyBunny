@@ -1,0 +1,53 @@
+.footer-img {
+  display: block;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+footer {
+  flex: 0 0 auto;
+  z-index: 1;
+}
+
+.content {
+  padding: 50px 50px 50px 50px;
+  flex: 1 0 auto;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+  background-color: lightgrey;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 7px;
+  height: 7px;
+  background-color: rgb(56, 52, 104);
+  border-radius: 3px;
+}
+
+html > body {
+background-color: #212121;
+overflow-x: hidden;
+}
+
+.chalk-font-35 {
+  font-family: 'Caveat';
+  font-size: 35px;
+}
+
+.chalk-font-25 {
+  font-family: 'Caveat';
+  font-size: 25px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.button-margin-20.MuiButtonBase-root {
+  margin: 20px;
+}

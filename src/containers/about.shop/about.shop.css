@@ -1,0 +1,19 @@
+.chalk-font-35 {
+    font-family: 'Caveat';
+    font-size: 35px;
+    z-index: 3;
+  }
+  
+.chalk-font-45 {
+    font-family: 'Caveat';
+    font-size: 45px;
+    margin: 20px 0px;
+    z-index: 3;
+  }
+
+.about-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}

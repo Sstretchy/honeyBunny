@@ -1,0 +1,17 @@
+.order-container {
+    padding: 20px;
+}
+
+.MuiGrid-item.acces-order-container {
+    margin-left: 20px;
+}
+
+.MuiFormControl-marginNormal.textfield-margin {
+    margin: 5px;
+}
+
+.order-container-center {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}

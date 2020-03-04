@@ -1,0 +1,29 @@
+.actions-align {
+    justify-content: space-between;
+}
+
+.content-scroll {
+    height: 70px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.width-stuff {
+    max-width: 20vw;
+    min-width: 200px;
+}
+
+.text-wrap {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* number of lines to show */
+    -webkit-box-orient: vertical;
+} 
+
+.wrap-box {
+    margin: 5px 0px;
+    height: 90px;
+}
