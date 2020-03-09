@@ -13,6 +13,7 @@ import {
     TextField,
 } from '@material-ui/core';
 import { inject, observer } from 'mobx-react';
+import { requestService } from '../../services/request.service';
 
 @inject('store')
 @observer
@@ -27,11 +28,49 @@ class Order extends React.Component {
             floor: '',
             apartment: '',
             comment: '',
-            firstName: '',
-            lastName: '',
+            firstName: localStorage.getItem('firstName') || '',
+            lastName: localStorage.getItem('lastName') || '',
             phone: '',
             email: '',
         };
+    }
+
+    setOrder = async () => {
+        const {
+            wayOfPaiment,
+            oddMoney,
+            address,
+            porch,
+            floor,
+            apartment,
+            comment,
+            firstName,
+            lastName,
+            phone,
+            email,
+        } = this.state;
+        try {
+            await requestService.order.postOrder(
+                {
+                    wayOfPaiment,
+                    oddMoney,
+                    address,
+                    porch,
+                    floor,
+                    apartment,
+                    comment,
+                    firstName,
+                    lastName,
+                    phone,
+                    email,
+                }
+            );
+            await requestService.basket.clearBasket();
+            this.props.store.basket.setToStore('basket', [])
+            this.props.history.push('success')
+        } catch (signInError) {
+            console.log('Ошибка при получении корзины');
+        }
     }
 
     changeWayOfPaiment = event => {
@@ -67,11 +106,10 @@ class Order extends React.Component {
     }
     render() {
         const {
-            // basket = [], 
             summa = 0,
             status,
-            setOrder
         } = this.props.store.basket;
+
         const {
             address,
             porch,
@@ -83,10 +121,9 @@ class Order extends React.Component {
             phone,
             email,
         } = this.state;
+
         const disabled = address && firstName && lastName && phone;
-        // if (summa < Constants.minSumOfOrder) {
-        //     return <Redirect to='/catalog' />;
-        // }
+
         if (status) {
             return <Redirect to='/backet' />;
         }
@@ -303,7 +340,7 @@ class Order extends React.Component {
                     <Button
                         disabled={!disabled}
                         className='button-margin-20'
-                        onClick={setOrder} color='secondary'
+                        onClick={this.setOrder} color='secondary'
                         variant='contained'>
                         Оформить заказ
                           </Button>

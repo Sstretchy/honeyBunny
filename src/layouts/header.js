@@ -25,6 +25,7 @@ class Header extends React.Component {
       <Grid
         container
         justify='space-between'
+        alignItems='center'
       >
         <img
           className='footer-img cursor-pointer'

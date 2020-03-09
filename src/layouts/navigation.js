@@ -19,9 +19,6 @@ class Navigation extends React.Component {
     { link: '/catalog', name: 'Каталог', icon: StoreMallDirectoryIcon },
     { link: '/contacts', name: 'Контакты', icon: ContactPhoneIcon },
     { link: '/aboutshop', name: 'О магазине', icon: StoreIcon },
-    { link: '/', name: 'Бесплатная доставка', icon: LocalShippingIcon },
-    { link: '/', name: 'Оплата заказа', icon: PaymentIcon },
-    { link: '/', name: 'Как купить', icon: ContactSupportIcon },
   ];
 
   toPath = (link) => {

@@ -1,11 +1,13 @@
 import {
   auth,
   good,
-  basket
+  basket,
+  order
 } from './api';
 
 export const requestService = {
   auth,
   good,
-  basket
+  basket,
+  order
 };

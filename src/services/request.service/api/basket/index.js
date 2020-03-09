@@ -1,6 +1,6 @@
 import { sendRequest } from '../../request.builder';
 
-const prefix = 'http://127.0.0.1:5000/api/busket/';
+const prefix = 'http://honeybunnycandyshop.herokuapp.com/api/busket/';
 
 export const basket = {
   getBasket: (userId) => {
@@ -20,4 +20,33 @@ export const basket = {
 
     return sendRequest(options);
   },
-};
+
+  clearBasket: () => {
+    const options = {
+      url: `${prefix}`,
+      method: 'DELETE',
+    };
+
+    return sendRequest(options);
+  },
+
+  putBasket: (itemId, data) => {
+    const options = {
+      url: `${prefix}${itemId}`,
+      method: 'PUT',
+      data,
+    };
+
+    return sendRequest(options);
+  },
+
+  deleteFromBasket: (itemId) => {
+    const options = {
+      url: `${prefix}${itemId}`,
+      method: 'DELETE',
+      data: { item_id: itemId }
+    };
+
+    return sendRequest(options);
+  },
+}

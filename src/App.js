@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react'
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
@@ -16,6 +16,7 @@ import logo from './qwer.png'
 import Navigation from './layouts/navigation';
 import Content from './layouts/content';
 import Header from './layouts/header';
+import { addJWT } from './services/request.service/request.builder';
 
 const drawerWidth = 200;
 
@@ -85,6 +86,11 @@ const useStyles = makeStyles(theme => ({
 
 
 export default function App() {
+
+  useEffect(() => {
+    addJWT(localStorage.getItem('jwt'));
+  }, [])
+
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);

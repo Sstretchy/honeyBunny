@@ -1,5 +1,6 @@
 import { action, configure, observable } from 'mobx';
 import { requestService } from '../request.service';
+import ToastService from '../toast.notify';
 
 configure({ enforceActions: 'observed' });
 
@@ -15,7 +16,10 @@ class BasketStore {
     stuff = [];
 
     @observable
-    basket = []
+    basket = [];
+
+    @observable
+    user_id = parseInt(localStorage.getItem('id'), 10);
 
     constructor(rootStore) {
         this.rootStore = rootStore;
@@ -24,42 +28,60 @@ class BasketStore {
     @action
     setSumma = () => {
         this.summa = 0;
-        this.basket.forEach(item => this.summa += item.count * item.price);
+        this.basket.forEach(item => this.summa += item.amount * item.good.price);
     }
 
     @action
-    removeFromBasket = (index) => {
-        this.basket.splice(index, 1);
-        this.setSumma()
+    removeFromBasket = async (itemId) => {
+        try {
+            await requestService.basket.deleteFromBasket(itemId);
+            const basket = await requestService.basket.getBasket(this.user_id);
+            this.setToStore('basket', basket)
+        } catch (signInError) {
+            console.log('Ошибка удаления');
+        }
     }
 
     @action
-    setOrder = () => {
-        if (!this.status) {
-            this.status = true;
+    addProduct = async (item_id, amount) => {
+        try {
+            await requestService.basket.putBasket(item_id, { amount });
+            const basket = await requestService.basket.getBasket(this.user_id);
+            this.setToStore('basket', basket)
+        } catch (signInError) {
+            console.log('Ошибка при получении корзины');
+        }
+    }
+
+    @action
+    addToBasket = async (good_id) => {
+        if (localStorage.getItem('jwt')) {
+            try {
+                console.log(this.user_id, good_id)
+                await requestService.basket.postBasket({ amount: 1, user_id: this.user_id, good_id });
+                const basket = await requestService.basket.getBasket(this.user_id);
+                this.setToStore('basket', basket)
+            } catch (signInError) {
+                console.log('Ошибка при получении корзины');
+            }
         } else {
-            this.status = false;
+            ToastService.notify('Войдите, чтобы начать покупки');
         }
     }
 
     @action
-    addProduct = (index) => {
-        const count = this.basket[index].count;
-        if (count < 999) {
-            this.basket[index].count++;
-            this.setSumma()
-        }
-    }
-
-    @action
-    reduceProduct = (index) => {
-        const count = this.basket[index].count;
-        if (count > 1) {
-            this.basket[index].count--;
+    reduceProduct = async (item_id, amount) => {
+        if (amount) {
+            try {
+                await requestService.basket.putBasket(item_id, { amount });
+                const basket = await requestService.basket.getBasket(this.user_id);
+                this.setToStore('basket', basket)
+            } catch (signInError) {
+                console.log('Ошибка при получении корзины');
+            }
         } else {
-            this.removeFromBasket(index);
+            await this.removeFromBasket(item_id)
         }
-        this.setSumma()
     }
 
 
@@ -72,9 +94,9 @@ class BasketStore {
         }
     }
 
-    fetchBasket = async (userId) => {
+    fetchBasket = async () => {
         try {
-            const basket = await requestService.basket.getBasket(userId);
+            const basket = await requestService.basket.getBasket(this.user_id);
             this.setToStore('basket', basket)
         } catch (signInError) {
             console.log('Ошибка при получении корзины');
@@ -84,6 +106,7 @@ class BasketStore {
     @action
     setToStore = (name, data) => {
         this[name] = data;
+        this.setSumma()
         console.log(this.basket)
     }
 

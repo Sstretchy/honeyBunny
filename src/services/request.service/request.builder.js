@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const requestInstance = axios.create({
-  baseURL: 'http://127.0.0.1:5000/api/'
+  baseURL: 'http://honeybunnycandyshop.herokuapp.com/api/'
 });
 
 export const sendRequest = async options => {
@@ -12,5 +12,7 @@ export const sendRequest = async options => {
 
 export const addJWT = token => {
   requestInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
-  localStorage.setItem('jwt', token);
+  if (token) {
+    localStorage.setItem('jwt', token);
+  }
 };

@@ -32,7 +32,7 @@ class BacketAlert extends React.Component {
   }
 
   async componentDidMount() {
-    await this.props.store.basket.fetchBasket(3)
+    await this.props.store.basket.fetchBasket()
     const { setSumma } = this.props.store.basket;
     setSumma()
   }
@@ -56,14 +56,12 @@ class BacketAlert extends React.Component {
       removeFromBasket,
       reduceProduct,
       summa = 0,
-      status,
       setOrder
     } = this.props.store.basket;
     return (
       <>
         <IconButton onClick={this.toggleDrawer('right', true)} >
           <ShoppingBasketIcon
-            className={status ? 'rotate' : ''}
             color='primary'
           />
           <Typography color='primary'>&nbsp;Корзина</Typography>
@@ -74,133 +72,110 @@ class BacketAlert extends React.Component {
           open={this.state.right}
           onClose={this.toggleDrawer('right', false)}
         >
-          <div
-            role="presentation"
-            onKeyDown={this.toggleDrawer('right', false)}
-          >
-            <Box className='basket-alert-container'>
-              <Typography variant="h4">Корзина</Typography>
-              <Typography
-                className='typography-margin-20'
-                variant="h5">
-                {`Сумма покупки: ${summa} рублей`}
-              </Typography>
-              {
-                status ?
-                  <>
+          {localStorage.getItem('id') ?
+            <div
+              role="presentation"
+              onKeyDown={this.toggleDrawer('right', false)}
+            >
+              <Box className='basket-alert-container'>
+                <Typography variant="h4">Корзина</Typography>
+                <Typography
+                  className='typography-margin-20'
+                  variant="h5">
+                  {`Сумма покупки: ${summa} рублей`}
+                </Typography>
+                {
+                  Constants.minSumOfOrder > summa ?
                     <Typography
-                      className='typography-margin-20'
-                      variant="h5">
-                      Доставляется
+                      className='typography-margin-20 typography-width-200'
+                      variant="h5"
+                    >
+                      {`До минимальной суммы заказа осталось: ${Constants.minSumOfOrder - summa} рублей`}
                     </Typography>
-                    <CircularProgress
-                      size={80}
-                      className='progress-margin'
-                      color='secondary'
-                    />
+                    :
                     <Button
                       className='button-margin-20'
-                      onClick={setOrder}
+                      onClick={() => this.toPath('/order')}
                       color='secondary'
                       variant='contained'
                     >
-                      Отменить заказ
-                                        </Button>
-                  </>
-                  :
-                  <>
-                    {
-                      Constants.minSumOfOrder > summa ?
-                        <Typography
-                          className='typography-margin-20 typography-width-200'
-                          variant="h5"
-                        >
-                          {`До минимальной суммы заказа осталось: ${Constants.minSumOfOrder - summa} рублей`}
-                        </Typography>
-                        :
-                        <Button
-                          className='button-margin-20'
-                          onClick={() => this.toPath('/order')}
-                          color='secondary'
-                          variant='contained'
-                        >
-                          Оформить заказ
+                      Оформить заказ
                                                 </Button>
-                    }
-                  </>
-              }
-              <Button
-                onClick={() => this.toPath('/backet')}
-                color='secondary'
-                variant='outlined'>
-                Перейти в корзину
+                }
+                <Button
+                  onClick={() => this.toPath('/backet')}
+                  color='secondary'
+                  variant='outlined'>
+                  Перейти в корзину
                                   </Button>
-            </Box>
-            <List>
-              <ListItem>
-                <ListItemText>
-                  <Typography variant='h5'>Сейчас в корзине:</Typography>
-                </ListItemText>
-              </ListItem>
-              {basket.length ? basket.map((item, index) => (
-                <React.Fragment key={index}>
-                  <Divider />
-                  <Box
-                    className='list-basket'
-                  >
-                    <Box>
-                      <Typography variant='h6'>{item.name}</Typography>
-                      <Typography>{`${item.type}, ${item.price}₽ ${item.forHowMuch}`}</Typography>
-                    </Box>
-                    <Box className='cart-item-container'>
-                      <IconButton
-                        disabled={status}
-                        onClick={() => removeFromBasket(index)}
-                        className='iconButton-padding-off'
-                      >
-                        <DeleteForeverIcon
-                          color='secondary'
-                          fontSize='large'
-                        />
-                      </IconButton>
-                      <Box className='cart-container'>
+              </Box>
+              <List>
+                <ListItem>
+                  <ListItemText>
+                    <Typography variant='h5'>Сейчас в корзине:</Typography>
+                  </ListItemText>
+                </ListItem>
+                {basket.length ? basket.map((item, index) => (
+                  <React.Fragment key={index}>
+                    <Divider />
+                    <Box
+                      className='list-basket'
+                    >
+                      <Box>
+                        <Typography variant='h6'>{item.good.name}</Typography>
+                        <Typography>{`${item.good.category}, ${item.good.price}₽ ${item.good.measure}`}</Typography>
+                      </Box>
+                      <Box className='cart-item-container'>
                         <IconButton
-                          disabled={status}
-                          onClick={() => reduceProduct(index)}
+                          onClick={() => removeFromBasket(item.id)}
                           className='iconButton-padding-off'
                         >
-                          <RemoveCircleIcon
+                          <DeleteForeverIcon
                             color='secondary'
                             fontSize='large'
                           />
                         </IconButton>
-                        <InputBase
-                          readOnly
-                          value={item.count}
-                          className='text-align-center'
-                        />
-                        <IconButton
-                          disabled={status}
-                          onClick={() => addProduct(index)}
-                          className='iconButton-padding-off'
-                        >
-                          <AddCircleIcon
-                            color='secondary'
-                            fontSize='large'
+                        <Box className='cart-container'>
+                          <IconButton
+                            onClick={() => reduceProduct(item.id, item.amount - 1)}
+                            className='iconButton-padding-off'
+                          >
+                            <RemoveCircleIcon
+                              color='secondary'
+                              fontSize='large'
+                            />
+                          </IconButton>
+                          <InputBase
+                            readOnly
+                            value={item.amount}
+                            className='text-align-center'
                           />
-                        </IconButton>
+                          <IconButton
+                            onClick={() => addProduct(item.id, item.amount + 1)}
+                            className='iconButton-padding-off'
+                          >
+                            <AddCircleIcon
+                              color='secondary'
+                              fontSize='large'
+                            />
+                          </IconButton>
+                        </Box>
                       </Box>
                     </Box>
+                  </React.Fragment>
+                )) :
+                  <Box className='list-basket'>
+                    <Typography variant='h6'>Пусто</Typography>
                   </Box>
-                </React.Fragment>
-              )) :
-                <Box className='list-basket'>
-                  <Typography variant='h6'>Пусто</Typography>
-                </Box>
-              }
-              <Divider />
-            </List>
-          </div>
+                }
+                <Divider />
+              </List>
+            </div>
+            :
+            <Box className='basket-alert-container'>
+              <Typography variant="h5">Корзина доступна зарегистрированным пользователям</Typography>
+            </Box>
+          }
         </Drawer >
       </>
     );
