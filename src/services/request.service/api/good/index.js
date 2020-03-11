@@ -1,6 +1,6 @@
 import { sendRequest } from '../../request.builder';
 
-const prefix = 'http://honeybunnycandyshop.herokuapp.com/api/good/';
+const prefix = 'https://honeybunnycandyshop.herokuapp.com/api/good/';
 
 export const good = {
   getGoodByCategory: (category) => {

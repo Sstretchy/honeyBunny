@@ -17,6 +17,7 @@ import Navigation from './layouts/navigation';
 import Content from './layouts/content';
 import Header from './layouts/header';
 import { addJWT } from './services/request.service/request.builder';
+import ToastTrigger from './containers/toast.trigger';
 
 const drawerWidth = 200;
 
@@ -105,6 +106,7 @@ export default function App() {
 
   return (
     <div className={classes.root}>
+      <ToastTrigger />
       <CssBaseline />
       <AppBar
         position="fixed"

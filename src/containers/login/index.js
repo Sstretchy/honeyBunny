@@ -15,6 +15,7 @@ import logotip from '../../logotip.png';
 import './login.css';
 import { requestService } from '../../services/request.service';
 import { addJWT } from '../../services/request.service/request.builder';
+import ToastService from '../../services/toast.notify';
 
 @inject('store')
 @observer
@@ -43,7 +44,7 @@ class Login extends React.Component {
             addJWT(accessToken);
             this.props.history.push('/');
         } catch (signInError) {
-            throw new Error(signInError);
+            ToastService.notify('Такой пользователь не сущетсвует.');
         }
     };
 

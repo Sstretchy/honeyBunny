@@ -10,6 +10,7 @@ import React, { Component } from 'react';
 class ToastTrigger extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       isToastOpen: false,
       message: '',

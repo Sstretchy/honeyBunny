@@ -1,5 +1,5 @@
 export default class ToastService {
-  static handler = {};
+  static handler = () => { };
 
   static notify(message) {
     this.handler({ message });
@@ -10,6 +10,6 @@ export default class ToastService {
   }
 
   static removeEventListener() {
-    this.handler = {};
+    this.handler = () => { };
   }
 }
