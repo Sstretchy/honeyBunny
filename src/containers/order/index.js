@@ -195,6 +195,12 @@ class Order extends React.Component {
                                             label="2000"
                                             labelPlacement="top"
                                         />
+                                        <FormControlLabel
+                                            value={'5000'}
+                                            control={<Radio />}
+                                            label="5000"
+                                            labelPlacement="top"
+                                        />
                                     </RadioGroup>
                                 </FormControl>
                             }
