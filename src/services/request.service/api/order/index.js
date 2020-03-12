@@ -1,6 +1,6 @@
 import { sendRequest } from '../../request.builder';
 
-const prefix = 'http://honeybunnycandyshop.herokuapp.com/api/order/';
+const prefix = 'https://honeybunnycandyshop.herokuapp.com/api/order/';
 
 export const order = {
     postOrder: (data) => {

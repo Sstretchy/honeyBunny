@@ -1,6 +1,6 @@
 import { sendRequest } from '../../request.builder';
 
-const prefix = 'http://honeybunnycandyshop.herokuapp.com/api/busket/';
+const prefix = 'https://honeybunnycandyshop.herokuapp.com/api/busket/';
 
 export const basket = {
   getBasket: (userId) => {
