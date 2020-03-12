@@ -9,11 +9,14 @@ import logotip from '../logotip.png';
 import { withRouter } from 'react-router';
 import './layouts.css';
 import BacketAlert from '../containers/backet.alert';
+import { inject, observer } from 'mobx-react';
 
-
+@inject('store')
+@observer
 class Header extends React.Component {
   toPath = () => {
     if (localStorage.getItem('jwt')) {
+      this.props.store.basket.clearCount();
       localStorage.clear();
       this.props.history.push('/login')
     } else {

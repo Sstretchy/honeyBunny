@@ -9,14 +9,12 @@ import {
 import StoreMallDirectoryIcon from '@material-ui/icons/StoreMallDirectory';
 import ContactPhoneIcon from '@material-ui/icons/ContactPhone';
 import StoreIcon from '@material-ui/icons/Store';
-import LocalShippingIcon from '@material-ui/icons/LocalShipping';
-import PaymentIcon from '@material-ui/icons/Payment';
-import ContactSupportIcon from '@material-ui/icons/ContactSupport';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import { withRouter } from 'react-router';
 
 class Navigation extends React.Component {
   links = [
-    { link: '/catalog', name: 'Каталог', icon: StoreMallDirectoryIcon },
+    { link: '/catalog', name: 'Каталог', icon: ShoppingCartIcon },
     { link: '/contacts', name: 'Контакты', icon: ContactPhoneIcon },
     { link: '/aboutshop', name: 'О магазине', icon: StoreIcon },
   ];

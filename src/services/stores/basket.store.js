@@ -14,10 +14,10 @@ class BasketStore {
 
     @observable
     stuff = [];
-    
+
     @observable
     basket = [];
-    
+
     @observable
     count = 0;
 
@@ -113,6 +113,10 @@ class BasketStore {
         this.setSumma()
     }
 
+    @action
+    clearCount = () => {
+        this.count = 0;
+    }
 }
 
 export default BasketStore;
