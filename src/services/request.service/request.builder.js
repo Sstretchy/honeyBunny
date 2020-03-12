@@ -1,10 +1,7 @@
 import axios from 'axios';
 
 const requestInstance = axios.create({
-  baseURL: 'https://honeybunnycandyshop.herokuapp.com/api/',
-  headers: {
-    'Access-Control-Allow-Origin': '*'
-  }
+  baseURL: 'https://honeybunnycandyshop.herokuapp.com/api/'
 });
 
 export const sendRequest = async options => {
