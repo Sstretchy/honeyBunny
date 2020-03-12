@@ -14,9 +14,12 @@ class BasketStore {
 
     @observable
     stuff = [];
-
+    
     @observable
     basket = [];
+    
+    @observable
+    count = 0;
 
     @observable
     user_id = parseInt(localStorage.getItem('id'), 10);
@@ -62,7 +65,7 @@ class BasketStore {
                 const basket = await requestService.basket.getBasket(this.user_id);
                 this.setToStore('basket', basket)
             } catch (signInError) {
-                console.log('Ошибка при получении корзины');
+                ToastService.notify('Уже в Вашей корзине');
             }
         } else {
             ToastService.notify('Войдите, чтобы начать покупки');
@@ -106,8 +109,8 @@ class BasketStore {
     @action
     setToStore = (name, data) => {
         this[name] = data;
+        this.count = this.basket.length
         this.setSumma()
-        console.log(this.basket)
     }
 
 }

@@ -17,7 +17,7 @@ export default class Constants {
     accountAlreadyExists: 'Юзер уже существует',
     passwordRepeatError: 'Пароль не совпадает с введенным ранее',
     invalidCredentials: 'Невалидные данные учетной записи',
-    invalidLetters: 'Поле может содержать только кириллицу и дефис',
+    invalidLetters: 'Поле может содержать только кириллицу и дефис, имя и фамилия должны начинаться с большой буквы.',
     invalidEmail: 'Это невалидный e-mail',
     emptyValueError: 'Поле не может быть пустым',
     invalidLength: ({ min, max }) => `Неверная длина вводимых символов (Должно быть между ${min} и ${max} символами)`,
