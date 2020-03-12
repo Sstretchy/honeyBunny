@@ -24,8 +24,8 @@ class Categories extends React.Component {
     }
 
     async componentDidMount() {
-        const { fetchStuff } = this.props.store.basket;
-        await fetchStuff('Печенье')
+        const { fetchCategories } = this.props.store.basket;
+        await fetchCategories();
     }
 
     changeCategory = async (category) => {
@@ -34,17 +34,8 @@ class Categories extends React.Component {
         await fetchStuff(category)
     }
 
-    links = [
-        { name: 'Печенье' },
-        { name: 'Сухарики и гренки' },
-        { name: 'Шоколад' },
-        { name: 'Орехи' },
-        { name: 'Чипсы' },
-        { name: 'Мармелад' },
-        { name: 'Драже' },
-        { name: 'Конфеты' },
-    ];
     render() {
+        const { categories = [] } = this.props.store.basket;
         return (
             <Grid className='categories'>
                 <List>
@@ -53,7 +44,7 @@ class Categories extends React.Component {
                             <Typography variant='h5'>Категории</Typography>
                         </ListItemText>
                     </ListItem>
-                    {this.links.map((item, index) => (
+                    {categories.map((item, index) => (
                         <React.Fragment key={index}>
                             <Divider />
                             <ListItem

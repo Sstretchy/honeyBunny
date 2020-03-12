@@ -1,0 +1,10 @@
+.content-scroll-view {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.max-width-card {
+    max-width: 800px;
+    margin-top: 40px;
+}

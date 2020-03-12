@@ -28,6 +28,7 @@ class BacketAlert extends React.Component {
     super(props);
     this.state = {
       right: false,
+      amountValue: ''
     };
   }
 
@@ -49,6 +50,11 @@ class BacketAlert extends React.Component {
 
     this.setState({ ...this.state, [side]: open });
   };
+
+  handleAmount = (id, event) => {
+    const amountValue = event.target.value;
+    this.setState({ amountValue })
+  }
   render() {
     const {
       basket = [],
@@ -148,6 +154,7 @@ class BacketAlert extends React.Component {
                           </IconButton>
                           <InputBase
                             readOnly
+                            // onChange={(event) => this.handleAmount(item.id, event)}
                             value={item.amount}
                             className='text-align-center'
                           />
