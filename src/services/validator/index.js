@@ -4,6 +4,7 @@ import { isNotEmpty } from './isNotEmpty';
 import { isValidLength } from './isValidLength';
 import { isValidName } from './isValidName';
 import { isValidPassword } from './isValidPassword';
+import { isPhone } from './isPhone';
 
 export const Validator = {
   hasTemplatePlaceholder,
@@ -12,4 +13,5 @@ export const Validator = {
   isValidLength,
   isValidName,
   isValidPassword,
+  isPhone
 };

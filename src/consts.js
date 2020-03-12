@@ -10,6 +10,7 @@ export default class Constants {
     passwordRegexp: /^[a-zA-Z0-9_\-.]+$/,
     emailRegexp: /^([a-zA-Z0-9_\-.]+)@([\w-]+\.)+([\w]{2,})$/i,
     templatePlaceholderRegexp: new RegExp(this.templatePlaceholder, 'g'),
+    phoneRegexp: /^((\+7|7|8)+([0-9]){10})$/
   };
 
   static messages = {
@@ -19,6 +20,7 @@ export default class Constants {
     invalidCredentials: 'Невалидные данные учетной записи',
     invalidLetters: 'Поле может содержать только кириллицу и дефис, имя и фамилия должны начинаться с большой буквы.',
     invalidEmail: 'Это невалидный e-mail',
+    invalidPhone: 'Неверный формат мобильного телефона (+7********** или 8**********)',
     emptyValueError: 'Поле не может быть пустым',
     invalidLength: ({ min, max }) => `Неверная длина вводимых символов (Должно быть между ${min} и ${max} символами)`,
   }

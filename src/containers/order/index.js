@@ -4,6 +4,7 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
+import { Validator } from '../../services/validator';
 import './order.css';
 import {
     Grid,
@@ -306,15 +307,15 @@ class Order extends React.Component {
                         />
                         <TextField
                             required
-                            label='Телефон'
+                            label='Мобильный телефон'
                             value={phone}
                             name='phone'
                             onChange={this.ChangeInfo}
                             margin='normal'
                             color='secondary'
                             variant="filled"
-                            error={!phone.trim()}
-                            helperText={!phone.trim() && 'Поле обязательно для заполнения'}
+                            error={Validator.isPhone(phone).message}
+                            helperText={Validator.isPhone(phone).message}
                         />
                         <TextField
                             label='E-mail'
@@ -324,6 +325,8 @@ class Order extends React.Component {
                             margin='normal'
                             color='secondary'
                             variant="filled"
+                            error={Validator.isEmail(email).message}
+                            helperText={Validator.isEmail(email).message}
                         />
                     </Grid>
                 </Grid>
