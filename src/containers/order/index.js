@@ -97,9 +97,11 @@ class Order extends React.Component {
                     );
                     localStorage.setItem('basket', JSON.stringify([]));
                     localStorage.removeItem('jwt');
+                    localStorage.removeItem('count');
                 } catch{
                     localStorage.setItem('basket', JSON.stringify([]));
                     localStorage.removeItem('jwt');
+                    localStorage.removeItem('count');
                 }
             }
             this.props.store.basket.setToStore('basket', [])
