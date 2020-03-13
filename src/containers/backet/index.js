@@ -106,7 +106,7 @@ class Backet extends React.Component {
                             </Box>
                             <Box className='cart-item-container'>
                               <IconButton
-                                onClick={() => removeFromBasket(item.id)}
+                                onClick={() => removeFromBasket(item.id, index)}
                                 className='iconButton-padding-off'
                               >
                                 <DeleteForeverIcon
@@ -116,7 +116,7 @@ class Backet extends React.Component {
                               </IconButton>
                               <Box className='cart-container'>
                                 <IconButton
-                                  onClick={() => reduceProduct(item.id, item.amount - 1)}
+                                  onClick={() => reduceProduct(item.id, item.amount - 1, index)}
                                   className='iconButton-padding-off'
                                 >
                                   <RemoveCircleIcon
@@ -130,7 +130,7 @@ class Backet extends React.Component {
                                   className='text-align-center'
                                 />
                                 <IconButton
-                                  onClick={() => addProduct(item.id, item.amount + 1)}
+                                  onClick={() => addProduct(item.id, item.amount + 1, index)}
                                   className='iconButton-padding-off'
                                 >
                                   <AddCircleIcon

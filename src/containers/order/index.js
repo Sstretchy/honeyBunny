@@ -6,6 +6,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { Validator } from '../../services/validator';
 import Constants from '../../consts';
+import { addJWT } from '../../services/request.service/request.builder';
 import './order.css';
 import {
     Grid,
@@ -54,24 +55,53 @@ class Order extends React.Component {
             phone,
             email,
             secret,
+            lena
         } = this.state;
+
         try {
-            await requestService.order.postOrder(
-                {
-                    wayOfPaiment,
-                    oddMoney,
-                    address,
-                    porch,
-                    floor,
-                    apartment,
-                    comment: comment + ' Промокод: ' + secret,
-                    firstName,
-                    lastName,
-                    phone,
-                    email,
+            const { summa } = this.props.store.basket;
+            if (localStorage.getItem('jwt')) {
+                await requestService.order.postOrder(
+                    {
+                        wayOfPaiment,
+                        oddMoney,
+                        address,
+                        porch,
+                        floor,
+                        apartment,
+                        comment: comment + 'Есть скидки? ' + secret + lena + ' Сумма: ' + summa,
+                        firstName,
+                        lastName,
+                        phone,
+                        email,
+                    }
+                );
+                await requestService.basket.clearBasket();
+            } else {
+                addJWT('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1ODQwNzQzMTcsIm5iZiI6MTU4NDA3NDMxNywianRpIjoiMmEyMjY4MTMtOTgzNi00N2ZiLWJhMjgtMWQzZTViYWU4NjllIiwiZXhwIjoxNjE1NjEwMzE3LCJpZGVudGl0eSI6ImFub25AbWFpbC5ydSIsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyJ9.wMr8jYdT5sxXM9y2bs5dpPRthdkKuw_0IiAdzyXPzl8')
+                try {
+                    await requestService.order.postOrder(
+                        {
+                            wayOfPaiment,
+                            oddMoney,
+                            address,
+                            porch,
+                            floor,
+                            apartment,
+                            comment: comment + 'Есть скидки? ' + secret + lena + ' Сумма: ' + summa,
+                            firstName,
+                            lastName,
+                            phone,
+                            email,
+                        }
+                    );
+                    localStorage.setItem('basket', JSON.stringify([]));
+                    localStorage.removeItem('jwt');
+                } catch{
+                    localStorage.setItem('basket', JSON.stringify([]));
+                    localStorage.removeItem('jwt');
                 }
-            );
-            await requestService.basket.clearBasket();
+            }
             this.props.store.basket.setToStore('basket', [])
             this.props.history.push('success')
         } catch (signInError) {
