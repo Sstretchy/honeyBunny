@@ -189,7 +189,7 @@ class Order extends React.Component {
                         className='footer-img'
                         src={heart}
                         alt="Logo"
-                        style={{ width: '150px', top: '80px', alignSelf: 'center' }}
+                        style={{ width: '100px', position: 'fixed', top: '80px', alignSelf: 'center' }}
                     /> : <></>}
                     <Typography
                         className='typography-margin-20'
