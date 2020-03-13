@@ -8,7 +8,6 @@ class Main extends React.Component {
         this.props.history.push('/catalog');
     }
     render() {
-        console.log(this.props)
         return (
             <>
                 <img

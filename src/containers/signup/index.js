@@ -94,7 +94,6 @@ class SignUp extends React.Component {
         password,
       });
       history.push('/login');
-      console.log(data)
     } catch (signInError) {
       throw new Error(signInError);
     }

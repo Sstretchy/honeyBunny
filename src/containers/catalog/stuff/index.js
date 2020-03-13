@@ -67,7 +67,6 @@ class Stuff extends React.Component {
                                 </CardContent>
                             </CardActionArea>
                             <CardActions className='actions-align'>
-                                {console.log(item)}
                                 <Typography
                                     noWrap
                                     variant='body2'>

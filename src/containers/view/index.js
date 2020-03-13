@@ -31,8 +31,6 @@ class Stuff extends React.Component {
             addToBasket
         } = this.props.store.basket;
 
-        console.log(this.props.history)
-
         return (
             <Grid container justify='center' alignItems='center' direction='column'>
                 <Button
