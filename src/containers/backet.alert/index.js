@@ -33,9 +33,11 @@ class BacketAlert extends React.Component {
   }
 
   async componentDidMount() {
-    await this.props.store.basket.fetchBasket()
-    const { setSumma } = this.props.store.basket;
-    setSumma()
+    if(localStorage.getItem('jwt')){
+      await this.props.store.basket.fetchBasket()
+      const { setSumma } = this.props.store.basket;
+      setSumma()
+    }
   }
 
   toPath = (path) => {

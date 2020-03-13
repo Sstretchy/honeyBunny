@@ -65,8 +65,8 @@ class BasketStore {
     @action
     addToBasket = async (good_id) => {
         if (localStorage.getItem('jwt')) {
+            this.user_id = parseInt(localStorage.getItem('id'), 10);
             try {
-                console.log(this.user_id, good_id)
                 await requestService.basket.postBasket({ amount: 1, user_id: this.user_id, good_id });
                 const basket = await requestService.basket.getBasket(this.user_id);
                 this.setToStore('basket', basket)
@@ -74,7 +74,7 @@ class BasketStore {
                 ToastService.notify('Уже в Вашей корзине');
             }
         } else {
-            ToastService.notify('Войдите, чтобы начать покупки');
+            ToastService.notify('Войдите, чтобы начать делать покупки');
         }
     }
 

@@ -5,6 +5,7 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { Validator } from '../../services/validator';
+import Constants from '../../consts';
 import './order.css';
 import {
     Grid,
@@ -15,6 +16,7 @@ import {
 } from '@material-ui/core';
 import { inject, observer } from 'mobx-react';
 import { requestService } from '../../services/request.service';
+import heart from '../../heart.png';
 
 @inject('store')
 @observer
@@ -33,6 +35,8 @@ class Order extends React.Component {
             lastName: localStorage.getItem('lastName') || '',
             phone: '',
             email: '',
+            secret: '',
+            lena: ''
         };
     }
 
@@ -49,6 +53,7 @@ class Order extends React.Component {
             lastName,
             phone,
             email,
+            secret,
         } = this.state;
         try {
             await requestService.order.postOrder(
@@ -59,7 +64,7 @@ class Order extends React.Component {
                     porch,
                     floor,
                     apartment,
-                    comment,
+                    comment: comment + ' Промокод: ' + secret,
                     firstName,
                     lastName,
                     phone,
@@ -121,9 +126,15 @@ class Order extends React.Component {
             lastName,
             phone,
             email,
+            secret,
+            lena
         } = this.state;
 
-        const disabled = address && firstName && lastName && phone;
+        const isLena = lena.toLowerCase() === 'Спиридонова'.toLowerCase();
+
+        const disabled = address && firstName && lastName && phone
+            && !Validator.isEmail(email).message && !Validator.isPhone(phone).message
+            && Constants.minSumOfOrder <= summa;
 
         if (status) {
             return <Redirect to='/backet' />;
@@ -147,6 +158,39 @@ class Order extends React.Component {
                         variant="h5">
                         Оформление заказа
                         </Typography>
+                    <TextField
+                        label='Промокод на скидку 20%'
+                        placeholder='Название песни. Плачь у порога, девчонка – недотрога. Жизнь разделила железная дорога.'
+                        value={secret}
+                        name='secret'
+                        onChange={this.ChangeInfo}
+                        margin='normal'
+                        color='secondary'
+                        variant="filled"
+                        fullWidth
+                        autoFocus
+                        multiline
+                        rows={1}
+                    />
+                    {secret.toLowerCase() == 'Электричка'.toLowerCase() ?
+                        <TextField
+                            label='Отлично!'
+                            placeholder='А напомните-ка еще раз Вашу фамилию ;)'
+                            value={lena}
+                            name='lena'
+                            onChange={this.ChangeInfo}
+                            margin='normal'
+                            color='secondary'
+                            variant="filled"
+                            fullWidth
+                            autoFocus
+                        /> : <></>}
+                    {isLena ? <img
+                        className='footer-img'
+                        src={heart}
+                        alt="Logo"
+                        style={{ width: '150px', top: '80px', alignSelf: 'center' }}
+                    /> : <></>}
                     <Typography
                         className='typography-margin-20'
                         variant="h6">
@@ -218,7 +262,8 @@ class Order extends React.Component {
                         </Typography>
                     <TextField
                         required
-                        label='Например, г.Ярославль, ул.Панина, дом 10'
+                        placeholder='Например, г.Ярославль, ул.Панина, дом 10'
+                        label='Адрес'
                         value={address}
                         name='address'
                         onChange={this.ChangeInfo}
@@ -341,10 +386,17 @@ class Order extends React.Component {
                         variant="h5">
                         Подтверждение заказа
                          </Typography>
+                    {Constants.minSumOfOrder > summa ? `До минимальной суммы заказа осталось: ${Constants.minSumOfOrder - summa} рублей` : <></>}
                     <Typography
                         className='typography-margin-20'
                         variant="h5">
-                        {`Итог: ${summa} рублей`}
+                        {secret.toLowerCase() == 'Электричка'.toLowerCase() ? `Итог со скидкой 
+                        
+                        ${ isLena ? 'по блату' : 'по промокоду'} на 
+                        ${ isLena ? '50%' : '20%'}: 
+                        ${Math.round(
+                            isLena ? summa * 0.5 : summa * 0.8
+                        )} ₽` : `Итог: ${summa} ₽`}
                     </Typography>
                     <Button
                         disabled={!disabled}

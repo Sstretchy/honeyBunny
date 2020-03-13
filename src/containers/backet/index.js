@@ -25,9 +25,11 @@ import { inject, observer } from 'mobx-react';
 @observer
 class Backet extends React.Component {
   async componentDidMount() {
-    this.props.store.basket.fetchBasket(localStorage.getItem('id'))
-    const { setSumma } = this.props.store.basket;
-    setSumma()
+    if (localStorage.getItem('jwt')) {
+      this.props.store.basket.fetchBasket(localStorage.getItem('id'))
+      const { setSumma } = this.props.store.basket;
+      setSumma()
+    }
   }
 
   toPath = (path) => {
