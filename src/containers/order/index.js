@@ -190,8 +190,8 @@ class Order extends React.Component {
                         Оформление заказа
                         </Typography>
                     <TextField
-                        label='Промокод на скидку 20%'
-                        placeholder='Название песни. Плачь у порога, девчонка – недотрога. Жизнь разделила железная дорога.'
+                        label='Нажми сюда, чтобы получить скидку в 20%'
+                        placeholder='Введите название песни. Плачь у порога, девчонка – недотрога. Жизнь разделила железная дорога.'
                         value={secret}
                         name='secret'
                         onChange={this.ChangeInfo}
