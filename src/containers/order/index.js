@@ -199,7 +199,7 @@ class Order extends React.Component {
                         color='secondary'
                         variant="filled"
                         fullWidth
-                        autoFocus
+                        autoFocus={secret.toLowerCase() != 'Электричка'.toLowerCase()}
                         multiline
                         rows={1}
                     />
@@ -214,7 +214,7 @@ class Order extends React.Component {
                             color='secondary'
                             variant="filled"
                             fullWidth
-                            autoFocus
+                            autoFocus={secret.toLowerCase() == 'Электричка'.toLowerCase()}
                         /> : <></>}
                     {isLena ? <img
                         className='footer-img'
